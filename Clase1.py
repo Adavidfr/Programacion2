@@ -113,22 +113,47 @@ def eliminarNotas():
         print("Estudiante no encontrado.")
 
 def consultar():
-    estudiante1 = session.query(Estudiante).filter_by(nombre='Paul').first()
-    
-    nota1 = session.query(Notas).filter_by(estudiante_id=estudiante1.id).first()
-    
-    print(f"La nota de {estudiante1.nombre} {estudiante1.apellido} es {nota1.nota} en la materia {nota1.materia}")
-    
+    nombre_estudiante = input("Ingrese el nombre del estudiante para consultar sus notas: ")
+    estudiante1 = session.query(Estudiante).filter_by(nombre=nombre_estudiante).first()
 
+    if estudiante1:
+        notas = session.query(Notas).filter_by(estudiante_id=estudiante1.id).all()
+        if notas:
+            print(f"Notas de {estudiante1.nombre} {estudiante1.apellido}:")
+            for nota in notas:
+                print(f"{nota.materia}: {nota.nota}")
+        else:
+            print(f"{estudiante1.nombre} no tiene notas registradas.")
+    else:
+        print("Estudiante no encontrado.")
 
-print("Menu de opciones")
-print("1. Crear usuario")
-print("2. Crear notas")
-print("3. Consultar notas")
-opcion = int(input("Ingrese la opción deseada: "))
-if opcion == 1:
-    crearUsuario()
-elif opcion == 2:
-    crearNotas()
-elif opcion == 3:
-    consultar()
+def menu():
+    while True:
+        print("\nMenú de opciones:")
+        print("1. Crear estudiante")
+        print("2. Crear notas")
+        print("3. Consultar notas")
+        print("4. Modificar nota")
+        print("5. Eliminar nota")
+        print("6. Salir")
+
+        opcion = input("Seleccione una opción (1-6): ")
+
+        if opcion == '1':
+            crearUsuario()
+        elif opcion == '2':
+            crearNotas()
+        elif opcion == '3':
+            consultar()
+        elif opcion == '4':
+            modificarNota()
+        elif opcion == '5':
+            eliminarNota()
+        elif opcion == '6':
+            print("¡Hasta luego!")
+            break
+        else:
+            print("Opción inválida. Intente de nuevo.")
+
+# Ejecutar el menú
+menu()
