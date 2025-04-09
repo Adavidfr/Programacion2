@@ -146,14 +146,13 @@ def menu():
         elif opcion == '3':
             consultar()
         elif opcion == '4':
-            modificarNota()
+            modificarNotas()
         elif opcion == '5':
-            eliminarNota()
+            eliminarNotas()
         elif opcion == '6':
             print("¡Hasta luego!")
             break
         else:
             print("Opción inválida. Intente de nuevo.")
 
-# Ejecutar el menú
 menu()
